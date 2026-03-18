@@ -65,7 +65,131 @@ const IconPdf = () => <svg width="16" height="16" viewBox="0 0 16 16" fill="none
 const IconPrint = () => <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M4 5V1h8v4M4 11H2V6h12v5h-2"/><rect x="4" y="9" width="8" height="5" rx="0.5"/><circle cx="11" cy="7.5" r="0.6" fill="currentColor"/></svg>;
 const IconShare = () => <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="4" cy="8" r="2"/><circle cx="12" cy="4" r="2"/><circle cx="12" cy="12" r="2"/><line x1="5.8" y1="7.1" x2="10.2" y2="4.9"/><line x1="5.8" y1="8.9" x2="10.2" y2="11.1"/></svg>;
 
+// Default users - stored in localStorage after first load
+const DEFAULT_USERS = [
+  { id: 1, name: "Admin", pin: "1234", role: "admin" },
+  { id: 2, name: "Rahastonhoitaja", pin: "5678", role: "editor" },
+  { id: 3, name: "Katselija", pin: "0000", role: "viewer" },
+];
+const USERS_KEY = "kassakirja-users";
+
+function LoginScreen({ onLogin, logoSrc }) {
+  const [pin, setPin] = useState("");
+  const [error, setError] = useState("");
+  const [shake, setShake] = useState(false);
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    const users = JSON.parse(localStorage.getItem(USERS_KEY) || "null") || DEFAULT_USERS;
+    const user = users.find(u => u.pin === pin);
+    if (user) {
+      onLogin(user);
+    } else {
+      setError("Väärä PIN-koodi");
+      setShake(true);
+      setTimeout(() => { setShake(false); setError(""); }, 1500);
+      setPin("");
+    }
+  }
+
+  function handleDigit(d) {
+    if (pin.length < 6) setPin(pin + d);
+  }
+
+  return (
+    <div style={{
+      minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center",
+      background: "linear-gradient(145deg, #0c1220 0%, #1a1f35 50%, #0f1628 100%)",
+      fontFamily: "'DM Sans', 'Segoe UI', sans-serif",
+    }}>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
+        @keyframes shake { 0%,100% { transform: translateX(0); } 20%,60% { transform: translateX(-8px); } 40%,80% { transform: translateX(8px); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+        .pin-dot { width: 14px; height: 14px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.25); transition: all 0.15s; }
+        .pin-dot-filled { background: #4f8cff; border-color: #4f8cff; box-shadow: 0 0 8px rgba(79,140,255,0.4); }
+        .num-btn {
+          width: 64px; height: 64px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.1);
+          background: rgba(255,255,255,0.04); color: #e0e4ef; font-size: 22px; font-weight: 600;
+          cursor: pointer; transition: all 0.15s; display: flex; align-items: center; justify-content: center;
+          font-family: 'DM Mono', monospace;
+        }
+        .num-btn:hover { background: rgba(79,140,255,0.15); border-color: rgba(79,140,255,0.3); }
+        .num-btn:active { transform: scale(0.93); background: rgba(79,140,255,0.25); }
+      `}</style>
+      <div style={{
+        animation: shake ? "shake 0.4s" : "fadeIn 0.5s ease-out",
+        textAlign: "center", padding: 40,
+      }}>
+        <img src={logoSrc} alt="GMCFI" style={{
+          width: 72, height: 72, borderRadius: "50%", marginBottom: 16,
+          boxShadow: "0 4px 24px rgba(107,39,55,0.5), 0 0 0 3px rgba(107,39,55,0.3)",
+        }} />
+        <h1 style={{ fontSize: 22, fontWeight: 700, color: "#f0f2fa", marginBottom: 4 }}>GMCFI Kassakirja</h1>
+        <p style={{ fontSize: 13, color: "#6b7394", marginBottom: 28 }}>Syötä PIN-koodi kirjautuaksesi</p>
+
+        <form onSubmit={handleSubmit}>
+          <div style={{ display: "flex", gap: 12, justifyContent: "center", marginBottom: 24 }}>
+            {[0,1,2,3].map(i => (
+              <div key={i} className={`pin-dot ${i < pin.length ? "pin-dot-filled" : ""}`} />
+            ))}
+          </div>
+
+          {error && <div style={{ color: "#ff6b6b", fontSize: 13, marginBottom: 16, fontWeight: 500 }}>{error}</div>}
+
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 64px)", gap: 12, justifyContent: "center", marginBottom: 12 }}>
+            {[1,2,3,4,5,6,7,8,9].map(d => (
+              <button key={d} type="button" className="num-btn" onClick={() => handleDigit(String(d))}>{d}</button>
+            ))}
+            <button type="button" className="num-btn" style={{ visibility: "hidden" }} />
+            <button type="button" className="num-btn" onClick={() => handleDigit("0")}>0</button>
+            <button type="button" className="num-btn" onClick={() => setPin(pin.slice(0, -1))} style={{ fontSize: 16 }}>⌫</button>
+          </div>
+
+          <button type="submit" disabled={pin.length < 4} style={{
+            marginTop: 12, padding: "10px 36px", borderRadius: 10, border: "none",
+            background: pin.length >= 4 ? "linear-gradient(135deg, #4f8cff, #3366dd)" : "rgba(255,255,255,0.06)",
+            color: pin.length >= 4 ? "white" : "#4a5270", fontSize: 14, fontWeight: 600, cursor: pin.length >= 4 ? "pointer" : "default",
+            fontFamily: "'DM Sans', sans-serif", transition: "all 0.2s",
+            boxShadow: pin.length >= 4 ? "0 4px 16px rgba(79,140,255,0.3)" : "none",
+          }}>Kirjaudu</button>
+        </form>
+
+        <p style={{ fontSize: 11, color: "#3e4560", marginTop: 24 }}>Oletus PIN: 1234 (Admin) · 5678 (Rahastonhoitaja)</p>
+      </div>
+    </div>
+  );
+}
+
 export default function KassakirjaApp() {
+  // Auth state
+  const [currentUser, setCurrentUser] = useState(() => {
+    try {
+      const s = localStorage.getItem("kassakirja-session");
+      return s ? JSON.parse(s) : null;
+    } catch { return null; }
+  });
+  const [showUserMenu, setShowUserMenu] = useState(false);
+  const [showUserMgmt, setShowUserMgmt] = useState(false);
+
+  function handleLogin(user) {
+    setCurrentUser(user);
+    localStorage.setItem("kassakirja-session", JSON.stringify(user));
+  }
+  function handleLogout() {
+    setCurrentUser(null);
+    localStorage.removeItem("kassakirja-session");
+    setShowUserMenu(false);
+  }
+
+  // If not logged in, show login screen
+  if (!currentUser) {
+    return <LoginScreen onLogin={handleLogin} logoSrc={LOGO_SRC} />;
+  }
+
+  const canEdit = currentUser.role === "admin" || currentUser.role === "editor";
+  const isAdmin = currentUser.role === "admin";
+
   const [year, setYear] = useState(2026);
   const [transactions, setTransactions] = useState(INITIAL_DATA);
   const [activeMonth, setActiveMonth] = useState(0);
@@ -438,6 +562,72 @@ export default function KassakirjaApp() {
 
   const [showPdfMenu, setShowPdfMenu] = useState(false);
 
+  // User management component (admin only)
+  function UserManager() {
+    const [users, setUsers] = useState(() => JSON.parse(localStorage.getItem(USERS_KEY) || "null") || DEFAULT_USERS);
+    const [newName, setNewName] = useState("");
+    const [newPin, setNewPin] = useState("");
+    const [newRole, setNewRole] = useState("viewer");
+
+    function saveUsers(u) { localStorage.setItem(USERS_KEY, JSON.stringify(u)); setUsers(u); }
+    function addUser() {
+      if (!newName || !newPin || newPin.length < 4) return;
+      const id = Math.max(...users.map(u => u.id), 0) + 1;
+      saveUsers([...users, { id, name: newName, pin: newPin, role: newRole }]);
+      setNewName(""); setNewPin(""); setNewRole("viewer");
+    }
+    function removeUser(id) { if (users.length > 1) saveUsers(users.filter(u => u.id !== id)); }
+
+    return (
+      <div>
+        <table style={{ width: "100%", borderCollapse: "collapse", marginBottom: 16 }}>
+          <thead><tr>
+            <th style={{ textAlign: "left", padding: "6px 10px", fontSize: 11, color: "#6b7394", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>NIMI</th>
+            <th style={{ textAlign: "left", padding: "6px 10px", fontSize: 11, color: "#6b7394", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>PIN</th>
+            <th style={{ textAlign: "left", padding: "6px 10px", fontSize: 11, color: "#6b7394", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>ROOLI</th>
+            <th style={{ width: 40 }} />
+          </tr></thead>
+          <tbody>
+            {users.map(u => (
+              <tr key={u.id}>
+                <td style={{ padding: "8px 10px", fontSize: 13, color: "#e0e4ef", borderBottom: "1px solid rgba(255,255,255,0.03)" }}>{u.name}</td>
+                <td style={{ padding: "8px 10px", fontSize: 13, color: "#8b95b8", fontFamily: "'DM Mono', monospace", borderBottom: "1px solid rgba(255,255,255,0.03)" }}>{u.pin}</td>
+                <td style={{ padding: "8px 10px", fontSize: 12, borderBottom: "1px solid rgba(255,255,255,0.03)" }}>
+                  <span style={{ padding: "2px 8px", borderRadius: 4, fontSize: 11, fontWeight: 500,
+                    background: u.role === "admin" ? "rgba(79,140,255,0.12)" : u.role === "editor" ? "rgba(93,218,138,0.1)" : "rgba(255,255,255,0.06)",
+                    color: u.role === "admin" ? "#4f8cff" : u.role === "editor" ? "#5dda8a" : "#8b95b8"
+                  }}>{u.role === "admin" ? "Ylläpitäjä" : u.role === "editor" ? "Muokkaaja" : "Katselija"}</span>
+                </td>
+                <td style={{ borderBottom: "1px solid rgba(255,255,255,0.03)" }}>
+                  {u.id !== currentUser.id && <button className="btn btn-danger" style={{ padding: "4px 6px" }} onClick={() => removeUser(u.id)}><IconTrash /></button>}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <div style={{ display: "flex", gap: 8, alignItems: "end" }}>
+          <div style={{ flex: 1 }}>
+            <label style={{ fontSize: 10, color: "#6b7394", display: "block", marginBottom: 3 }}>NIMI</label>
+            <input className="input-field" value={newName} onChange={e => setNewName(e.target.value)} placeholder="Uusi käyttäjä" />
+          </div>
+          <div style={{ width: 100 }}>
+            <label style={{ fontSize: 10, color: "#6b7394", display: "block", marginBottom: 3 }}>PIN</label>
+            <input className="input-field" value={newPin} onChange={e => setNewPin(e.target.value)} placeholder="1234" maxLength={6} />
+          </div>
+          <div style={{ width: 140 }}>
+            <label style={{ fontSize: 10, color: "#6b7394", display: "block", marginBottom: 3 }}>ROOLI</label>
+            <select className="input-field" value={newRole} onChange={e => setNewRole(e.target.value)}>
+              <option value="admin">Ylläpitäjä</option>
+              <option value="editor">Muokkaaja</option>
+              <option value="viewer">Katselija</option>
+            </select>
+          </div>
+          <button className="btn btn-primary" style={{ padding: "7px 14px" }} onClick={addUser} disabled={!newName || !newPin || newPin.length < 4}><IconPlus /> Lisää</button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div style={{
       fontFamily: "'DM Sans', 'Segoe UI', sans-serif",
@@ -620,9 +810,60 @@ export default function KassakirjaApp() {
                 </>
               )}
             </div>
+
+            <div style={{ width: 1, height: 24, background: "rgba(255,255,255,0.1)", margin: "0 4px" }} />
+
+            {/* User menu */}
+            <div style={{ position: "relative" }}>
+              <button className="btn btn-ghost" onClick={() => setShowUserMenu(!showUserMenu)} style={{ gap: 5, padding: "8px 12px" }}>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="8" cy="5" r="3"/><path d="M2 14c0-3 2.5-5 6-5s6 2 6 5"/></svg>
+                {currentUser.name} <IconDown />
+              </button>
+              {showUserMenu && (
+                <>
+                  <div style={{ position: "fixed", inset: 0, zIndex: 90 }} onClick={() => setShowUserMenu(false)} />
+                  <div style={{
+                    position: "absolute", top: "calc(100% + 6px)", right: 0, zIndex: 100,
+                    background: "#1e2440", border: "1px solid rgba(255,255,255,0.1)",
+                    borderRadius: 10, padding: 6, minWidth: 200,
+                    boxShadow: "0 12px 40px rgba(0,0,0,0.5)", animation: "fadeIn 0.2s ease"
+                  }}>
+                    <div style={{ padding: "8px 12px", fontSize: 12, color: "#8b95b8", borderBottom: "1px solid rgba(255,255,255,0.06)", marginBottom: 4 }}>
+                      <div style={{ color: "#e0e4ef", fontWeight: 600, fontSize: 13 }}>{currentUser.name}</div>
+                      <div style={{ marginTop: 2 }}>{currentUser.role === "admin" ? "Ylläpitäjä" : currentUser.role === "editor" ? "Muokkaaja" : "Katselija"}</div>
+                    </div>
+                    {isAdmin && (
+                      <button className="btn btn-ghost" style={{ width: "100%", justifyContent: "flex-start", borderRadius: 6, marginBottom: 2 }}
+                        onClick={() => { setShowUserMgmt(!showUserMgmt); setShowUserMenu(false); }}>
+                        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="6" cy="5" r="2.5"/><path d="M1 14c0-2.5 2-4.5 5-4.5"/><circle cx="12" cy="5" r="2.5"/><path d="M12 9v4M10 11h4"/></svg>
+                        Hallinnoi käyttäjiä
+                      </button>
+                    )}
+                    <button className="btn btn-ghost" style={{ width: "100%", justifyContent: "flex-start", borderRadius: 6, color: "#ff6b6b" }}
+                      onClick={handleLogout}>
+                      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M6 2H3a1 1 0 00-1 1v10a1 1 0 001 1h3M11 11l3-3-3-3M14 8H6"/></svg>
+                      Kirjaudu ulos
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
           </div>
         </div>
       </div>
+
+      {/* USER MANAGEMENT (admin only) */}
+      {showUserMgmt && isAdmin && (
+        <div style={{ padding: "0 32px 16px", maxWidth: 1200, margin: "0 auto" }}>
+          <div className="card" style={{ padding: "20px 24px", animation: "fadeIn 0.3s ease" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+              <div style={{ fontSize: 15, fontWeight: 600, color: "#c8cee0" }}>Käyttäjien hallinta</div>
+              <button className="btn btn-ghost" style={{ padding: "5px 10px" }} onClick={() => setShowUserMgmt(false)}><IconX /></button>
+            </div>
+            <UserManager />
+          </div>
+        </div>
+      )}
 
       {/* STAT CARDS */}
       <div style={{ padding: "20px 32px", maxWidth: 1200, margin: "0 auto" }}>
@@ -772,9 +1013,9 @@ export default function KassakirjaApp() {
             <div className="card" style={{ overflow: "auto" }}>
               <div style={{ padding: "14px 20px", display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
                 <span style={{ fontSize: 13, color: "#6b7394" }}>{currentRows.length} kirjausta</span>
-                <button className="btn btn-primary" onClick={() => { setShowAddForm(!showAddForm); setEditingId(null); }}>
+                {canEdit && <button className="btn btn-primary" onClick={() => { setShowAddForm(!showAddForm); setEditingId(null); }}>
                   <IconPlus /> Lisää kirjaus
-                </button>
+                </button>}
               </div>
 
               {/* Add form */}
@@ -903,10 +1144,10 @@ export default function KassakirjaApp() {
                         <td className="balance-val" style={{ textAlign: "right" }}>{fmtAbs(bal)}</td>
                         <td style={{ fontSize: 12, color: "#6b7394" }}>{row.payment}</td>
                         <td>
-                          <div style={{ display: "flex", gap: 4 }}>
+                          {canEdit && <div style={{ display: "flex", gap: 4 }}>
                             <button className="btn btn-ghost" style={{ padding: "5px 8px", fontSize: 11 }} onClick={() => startEdit(row)}><IconEdit /></button>
                             <button className="btn btn-danger" style={{ padding: "5px 8px", fontSize: 11 }} onClick={() => deleteTransaction(row.id)}><IconTrash /></button>
-                          </div>
+                          </div>}
                         </td>
                       </tr>
                     );
