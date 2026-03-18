@@ -171,6 +171,16 @@ export default function KassakirjaApp() {
   });
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [showUserMgmt, setShowUserMgmt] = useState(false);
+  const [year, setYear] = useState(2026);
+  const [transactions, setTransactions] = useState(INITIAL_DATA);
+  const [activeMonth, setActiveMonth] = useState(0);
+  const [view, setView] = useState("summary");
+  const [editingId, setEditingId] = useState(null);
+  const [editRow, setEditRow] = useState(null);
+  const [showAddForm, setShowAddForm] = useState(false);
+  const [newRow, setNewRow] = useState({ date: "", receipt: "", category: "", description: "", name: "", income: "", expense: "", payment: "" });
+  const [saved, setSaved] = useState(false);
+  const [showPdfMenu, setShowPdfMenu] = useState(false);
 
   function handleLogin(user) {
     setCurrentUser(user);
@@ -181,24 +191,6 @@ export default function KassakirjaApp() {
     localStorage.removeItem("kassakirja-session");
     setShowUserMenu(false);
   }
-
-  // If not logged in, show login screen
-  if (!currentUser) {
-    return <LoginScreen onLogin={handleLogin} logoSrc={LOGO_SRC} />;
-  }
-
-  const canEdit = currentUser.role === "admin" || currentUser.role === "editor";
-  const isAdmin = currentUser.role === "admin";
-
-  const [year, setYear] = useState(2026);
-  const [transactions, setTransactions] = useState(INITIAL_DATA);
-  const [activeMonth, setActiveMonth] = useState(0);
-  const [view, setView] = useState("summary");
-  const [editingId, setEditingId] = useState(null);
-  const [editRow, setEditRow] = useState(null);
-  const [showAddForm, setShowAddForm] = useState(false);
-  const [newRow, setNewRow] = useState({ date: "", receipt: "", category: "", description: "", name: "", income: "", expense: "", payment: "" });
-  const [saved, setSaved] = useState(false);
 
   const storageKey = STORAGE_KEY + "-" + year;
 
@@ -262,6 +254,14 @@ export default function KassakirjaApp() {
     });
     return map;
   }, [transactions]);
+
+  // If not logged in, show login screen
+  if (!currentUser) {
+    return <LoginScreen onLogin={handleLogin} logoSrc={LOGO_SRC} />;
+  }
+
+  const canEdit = currentUser.role === "admin" || currentUser.role === "editor";
+  const isAdmin = currentUser.role === "admin";
 
   function addTransaction() {
     const rows = transactions[activeMonth] || [];
@@ -559,8 +559,6 @@ export default function KassakirjaApp() {
     // Fallback: download
     handleDownloadPdf(mode);
   }
-
-  const [showPdfMenu, setShowPdfMenu] = useState(false);
 
   // User management component (admin only)
   function UserManager() {
