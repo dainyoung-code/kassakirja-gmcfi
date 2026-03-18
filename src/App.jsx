@@ -67,7 +67,7 @@ const IconShare = () => <svg width="16" height="16" viewBox="0 0 16 16" fill="no
 
 // Default users - stored in localStorage after first load
 const DEFAULT_USERS = [
-  { id: 1, name: "Admin", pin: "1234", role: "admin" },
+  { id: 1, name: "Admin", pin: "1992", role: "admin" },
   { id: 2, name: "Rahastonhoitaja", pin: "5678", role: "editor" },
   { id: 3, name: "Katselija", pin: "0000", role: "viewer" },
 ];
@@ -155,7 +155,7 @@ function LoginScreen({ onLogin, logoSrc }) {
           }}>Kirjaudu</button>
         </form>
 
-        <p style={{ fontSize: 11, color: "#3e4560", marginTop: 24 }}>Oletus PIN: 1234 (Admin) · 5678 (Rahastonhoitaja)</p>
+        <p style={{ fontSize: 11, color: "#3e4560", marginTop: 24 }}>Oletus PIN: 1992 (Admin) · 5678 (Rahastonhoitaja)</p>
       </div>
     </div>
   );
