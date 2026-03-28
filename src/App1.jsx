@@ -109,7 +109,7 @@ function LoginScreen({ onLogin, logoSrc }) {
   return (
     <div style={{
       minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center",
-      background: "linear-gradient(145deg, #0c1220 0%, #1a1f35 50%, #0f1628 100%)",
+      background: "linear-gradient(145deg, #0f0a1a 0%, #1a0f2e 50%, #120a20 100%)",
       fontFamily: "'DM Sans', 'Segoe UI', sans-serif",
     }}>
       <style>{`
@@ -117,14 +117,14 @@ function LoginScreen({ onLogin, logoSrc }) {
         @keyframes shake { 0%,100% { transform: translateX(0); } 20%,60% { transform: translateX(-8px); } 40%,80% { transform: translateX(8px); } }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
         .pin-dot { width: 14px; height: 14px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.25); transition: all 0.15s; }
-        .pin-dot-filled { background: #4f8cff; border-color: #4f8cff; box-shadow: 0 0 8px rgba(79,140,255,0.4); }
+        .pin-dot-filled { background: #4f8cff; border-color: #c4a265; box-shadow: 0 0 8px rgba(79,140,255,0.4); }
         .num-btn {
           width: 64px; height: 64px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.1);
-          background: rgba(255,255,255,0.04); color: #e0e4ef; font-size: 22px; font-weight: 600;
+          background: rgba(255,255,255,0.04); color: #f0e8ef; font-size: 22px; font-weight: 600;
           cursor: pointer; transition: all 0.15s; display: flex; align-items: center; justify-content: center;
           font-family: 'DM Mono', monospace;
         }
-        .num-btn:hover { background: rgba(79,140,255,0.15); border-color: rgba(79,140,255,0.3); }
+        .num-btn:hover { background: rgba(212,164,106,0.15); border-color: rgba(79,140,255,0.3); }
         .num-btn:active { transform: scale(0.93); background: rgba(79,140,255,0.25); }
       `}</style>
       <div style={{
@@ -135,8 +135,8 @@ function LoginScreen({ onLogin, logoSrc }) {
           width: 72, height: 72, borderRadius: "50%", marginBottom: 16,
           boxShadow: "0 4px 24px rgba(107,39,55,0.5), 0 0 0 3px rgba(107,39,55,0.3)",
         }} />
-        <h1 style={{ fontSize: 22, fontWeight: 700, color: "#f0f2fa", marginBottom: 4 }}>GMCFI Kassakirja</h1>
-        <p style={{ fontSize: 13, color: "#6b7394", marginBottom: 28 }}>Syötä PIN-koodi kirjautuaksesi</p>
+        <h1 style={{ fontSize: 22, fontWeight: 700, color: "#f8f0f8", marginBottom: 4 }}>GMCFI Kassakirja</h1>
+        <p style={{ fontSize: 13, color: "#9b8aad", marginBottom: 28 }}>Syötä PIN-koodi kirjautuaksesi</p>
 
         <form onSubmit={handleSubmit}>
           <div style={{ display: "flex", gap: 12, justifyContent: "center", marginBottom: 24 }}>
@@ -158,8 +158,8 @@ function LoginScreen({ onLogin, logoSrc }) {
 
           <button type="submit" disabled={pin.length < 4} style={{
             marginTop: 12, padding: "10px 36px", borderRadius: 10, border: "none",
-            background: pin.length >= 4 ? "linear-gradient(135deg, #4f8cff, #3366dd)" : "rgba(255,255,255,0.06)",
-            color: pin.length >= 4 ? "white" : "#4a5270", fontSize: 14, fontWeight: 600, cursor: pin.length >= 4 ? "pointer" : "default",
+            background: pin.length >= 4 ? "linear-gradient(135deg, #8B2252, #6B2FA0)" : "rgba(255,255,255,0.06)",
+            color: pin.length >= 4 ? "white" : "#5a4570", fontSize: 14, fontWeight: 600, cursor: pin.length >= 4 ? "pointer" : "default",
             fontFamily: "'DM Sans', sans-serif", transition: "all 0.2s",
             boxShadow: pin.length >= 4 ? "0 4px 16px rgba(79,140,255,0.3)" : "none",
           }}>Kirjaudu</button>
@@ -664,20 +664,20 @@ export default function KassakirjaApp() {
       <div>
         <table style={{ width: "100%", borderCollapse: "collapse", marginBottom: 16 }}>
           <thead><tr>
-            <th style={{ textAlign: "left", padding: "6px 10px", fontSize: 11, color: "#6b7394", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>NIMI</th>
-            <th style={{ textAlign: "left", padding: "6px 10px", fontSize: 11, color: "#6b7394", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>PIN</th>
-            <th style={{ textAlign: "left", padding: "6px 10px", fontSize: 11, color: "#6b7394", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>ROOLI</th>
+            <th style={{ textAlign: "left", padding: "6px 10px", fontSize: 11, color: "#9b8aad", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>NIMI</th>
+            <th style={{ textAlign: "left", padding: "6px 10px", fontSize: 11, color: "#9b8aad", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>PIN</th>
+            <th style={{ textAlign: "left", padding: "6px 10px", fontSize: 11, color: "#9b8aad", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>ROOLI</th>
             <th style={{ width: 40 }} />
           </tr></thead>
           <tbody>
             {users.map(u => (
               <tr key={u.id}>
-                <td style={{ padding: "8px 10px", fontSize: 13, color: "#e0e4ef", borderBottom: "1px solid rgba(255,255,255,0.03)" }}>{u.name}</td>
-                <td style={{ padding: "8px 10px", fontSize: 13, color: "#8b95b8", fontFamily: "'DM Mono', monospace", borderBottom: "1px solid rgba(255,255,255,0.03)" }}>{u.pin}</td>
+                <td style={{ padding: "8px 10px", fontSize: 13, color: "#f0e8ef", borderBottom: "1px solid rgba(255,255,255,0.03)" }}>{u.name}</td>
+                <td style={{ padding: "8px 10px", fontSize: 13, color: "#a090b8", fontFamily: "'DM Mono', monospace", borderBottom: "1px solid rgba(255,255,255,0.03)" }}>{u.pin}</td>
                 <td style={{ padding: "8px 10px", fontSize: 12, borderBottom: "1px solid rgba(255,255,255,0.03)" }}>
                   <span style={{ padding: "2px 8px", borderRadius: 4, fontSize: 11, fontWeight: 500,
                     background: u.role === "admin" ? "rgba(79,140,255,0.12)" : u.role === "editor" ? "rgba(93,218,138,0.1)" : "rgba(255,255,255,0.06)",
-                    color: u.role === "admin" ? "#4f8cff" : u.role === "editor" ? "#5dda8a" : "#8b95b8"
+                    color: u.role === "admin" ? "#4f8cff" : u.role === "editor" ? "#5dda8a" : "#a090b8"
                   }}>{u.role === "admin" ? "Ylläpitäjä" : u.role === "editor" ? "Muokkaaja" : "Katselija"}</span>
                 </td>
                 <td style={{ borderBottom: "1px solid rgba(255,255,255,0.03)" }}>
@@ -689,15 +689,15 @@ export default function KassakirjaApp() {
         </table>
         <div style={{ display: "flex", gap: 8, alignItems: "end" }}>
           <div style={{ flex: 1 }}>
-            <label style={{ fontSize: 10, color: "#6b7394", display: "block", marginBottom: 3 }}>NIMI</label>
+            <label style={{ fontSize: 10, color: "#9b8aad", display: "block", marginBottom: 3 }}>NIMI</label>
             <input className="input-field" value={newName} onChange={e => setNewName(e.target.value)} placeholder="Uusi käyttäjä" />
           </div>
           <div style={{ width: 100 }}>
-            <label style={{ fontSize: 10, color: "#6b7394", display: "block", marginBottom: 3 }}>PIN</label>
+            <label style={{ fontSize: 10, color: "#9b8aad", display: "block", marginBottom: 3 }}>PIN</label>
             <input className="input-field" value={newPin} onChange={e => setNewPin(e.target.value)} placeholder="1234" maxLength={6} />
           </div>
           <div style={{ width: 140 }}>
-            <label style={{ fontSize: 10, color: "#6b7394", display: "block", marginBottom: 3 }}>ROOLI</label>
+            <label style={{ fontSize: 10, color: "#9b8aad", display: "block", marginBottom: 3 }}>ROOLI</label>
             <select className="input-field" value={newRole} onChange={e => setNewRole(e.target.value)}>
               <option value="admin">Ylläpitäjä</option>
               <option value="editor">Muokkaaja</option>
@@ -713,8 +713,8 @@ export default function KassakirjaApp() {
   return (
     <div style={{
       fontFamily: "'DM Sans', 'Segoe UI', sans-serif",
-      background: "linear-gradient(145deg, #0c1220 0%, #1a1f35 50%, #0f1628 100%)",
-      color: "#e0e4ef",
+      background: "linear-gradient(145deg, #0f0a1a 0%, #1a0f2e 50%, #120a20 100%)",
+      color: "#f0e8ef",
       minHeight: "100vh",
       padding: "0",
     }}>
@@ -743,33 +743,33 @@ export default function KassakirjaApp() {
           font-family: 'DM Sans', sans-serif;
         }
         .btn-primary {
-          background: linear-gradient(135deg, #4f8cff, #3366dd);
-          color: white; box-shadow: 0 2px 12px rgba(79,140,255,0.3);
+          background: linear-gradient(135deg, #8B2252, #6B2FA0);
+          color: white; box-shadow: 0 2px 12px rgba(139,34,82,0.4);
         }
-        .btn-primary:hover { box-shadow: 0 4px 20px rgba(79,140,255,0.45); transform: translateY(-1px); }
+        .btn-primary:hover { box-shadow: 0 4px 20px rgba(139,34,82,0.55); transform: translateY(-1px); }
         .btn-ghost {
-          background: rgba(255,255,255,0.06); color: #aab4d0; border: 1px solid rgba(255,255,255,0.08);
+          background: rgba(212,164,106,0.08); color: #c4b5d0; border: 1px solid rgba(212,164,106,0.15);
         }
-        .btn-ghost:hover { background: rgba(255,255,255,0.1); color: #e0e4ef; }
+        .btn-ghost:hover { background: rgba(212,164,106,0.15); color: #f0e8ef; }
         .btn-danger { background: rgba(255,80,80,0.12); color: #ff6b6b; border: 1px solid rgba(255,80,80,0.15); }
         .btn-danger:hover { background: rgba(255,80,80,0.2); }
         .btn-success { background: rgba(80,200,120,0.15); color: #5dda8a; border: 1px solid rgba(80,200,120,0.2); }
         .btn-pdf { background: rgba(220,160,50,0.12); color: #e8b84a; border: 1px solid rgba(220,160,50,0.18); }
         .btn-pdf:hover { background: rgba(220,160,50,0.2); color: #f0c860; }
         .input-field {
-          background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
-          color: #e0e4ef; padding: 7px 10px; border-radius: 6px; font-size: 13px;
+          background: rgba(139,34,82,0.1); border: 1px solid rgba(212,164,106,0.15);
+          color: #f0e8ef; padding: 7px 10px; border-radius: 6px; font-size: 13px;
           transition: border-color 0.2s; width: 100%;
         }
-        .input-field:focus { outline: none; border-color: #4f8cff; box-shadow: 0 0 0 2px rgba(79,140,255,0.15); }
+        .input-field:focus { outline: none; border-color: #c4a265; box-shadow: 0 0 0 2px rgba(79,140,255,0.15); }
         .month-tab {
           padding: 6px 14px; border-radius: 8px; border: none; cursor: pointer;
           font-size: 12.5px; font-weight: 500; transition: all 0.2s;
           font-family: 'DM Sans', sans-serif; white-space: nowrap;
         }
-        .month-tab-active { background: linear-gradient(135deg, #4f8cff, #3366dd); color: white; box-shadow: 0 2px 8px rgba(79,140,255,0.3); }
+        .month-tab-active { background: linear-gradient(135deg, #8B2252, #6B2FA0); color: white; box-shadow: 0 2px 8px rgba(139,34,82,0.4); }
         .month-tab-inactive { background: rgba(255,255,255,0.04); color: #7a84a0; }
-        .month-tab-inactive:hover { background: rgba(255,255,255,0.08); color: #aab4d0; }
+        .month-tab-inactive:hover { background: rgba(255,255,255,0.08); color: #c4b5d0; }
         .tag { padding: 3px 8px; border-radius: 5px; font-size: 11px; font-weight: 500; }
         .saved-badge {
           position: fixed; top: 20px; right: 20px; z-index: 100;
@@ -780,12 +780,12 @@ export default function KassakirjaApp() {
           display: flex; align-items: center; gap: 6px;
         }
         table { width: 100%; border-collapse: collapse; }
-        th { text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; color: #6b7394; font-weight: 600; padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,0.06); }
-        td { padding: 10px 12px; font-size: 13px; border-bottom: 1px solid rgba(255,255,255,0.03); vertical-align: middle; }
-        tr:hover td { background: rgba(255,255,255,0.02); }
+        th { text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; color: #9b8aad; font-weight: 600; padding: 10px 12px; border-bottom: 1px solid rgba(212,164,106,0.1); }
+        td { padding: 10px 12px; font-size: 13px; border-bottom: 1px solid rgba(139,34,82,0.1); vertical-align: middle; }
+        tr:hover td { background: rgba(139,34,82,0.06); }
         .income-val { color: #5dda8a; font-family: 'DM Mono', monospace; font-size: 13px; }
         .expense-val { color: #ff6b6b; font-family: 'DM Mono', monospace; font-size: 13px; }
-        .balance-val { color: #e0e4ef; font-family: 'DM Mono', monospace; font-size: 13px; font-weight: 500; }
+        .balance-val { color: #f0e8ef; font-family: 'DM Mono', monospace; font-size: 13px; font-weight: 500; }
         .mono { font-family: 'DM Mono', monospace; font-size: 13px; }
       `}</style>
 
@@ -810,26 +810,26 @@ export default function KassakirjaApp() {
                 }}>GMCFI</span>
                 <span style={{ width: 1, height: 14, background: "rgba(255,255,255,0.12)" }} />
                 <div style={{ display: "flex", alignItems: "center", gap: 2 }}>
-                  <span style={{ fontSize: 11, fontWeight: 600, letterSpacing: 2, textTransform: "uppercase", color: "#4f8cff" }}>Kassakirja</span>
+                  <span style={{ fontSize: 11, fontWeight: 600, letterSpacing: 2, textTransform: "uppercase", color: "#4fc8e8" }}>Kassakirja</span>
                   <button onClick={() => setYear(y => y - 1)} style={{
-                    background: "none", border: "none", cursor: "pointer", padding: "2px 6px", color: "#6b7394", fontSize: 14, lineHeight: 1, borderRadius: 4,
+                    background: "none", border: "none", cursor: "pointer", padding: "2px 6px", color: "#9b8aad", fontSize: 14, lineHeight: 1, borderRadius: 4,
                     display: "flex", alignItems: "center",
                   }} title="Edellinen vuosi">
                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" strokeWidth="2"><path d="M7 1L3 5l4 4"/></svg>
                   </button>
-                  <span style={{ fontSize: 13, fontWeight: 700, letterSpacing: 1, color: "#4f8cff", minWidth: 38, textAlign: "center", cursor: "default" }}>{year}</span>
+                  <span style={{ fontSize: 13, fontWeight: 700, letterSpacing: 1, color: "#4fc8e8", minWidth: 38, textAlign: "center", cursor: "default" }}>{year}</span>
                   <button onClick={() => setYear(y => y + 1)} style={{
-                    background: "none", border: "none", cursor: "pointer", padding: "2px 6px", color: "#6b7394", fontSize: 14, lineHeight: 1, borderRadius: 4,
+                    background: "none", border: "none", cursor: "pointer", padding: "2px 6px", color: "#9b8aad", fontSize: 14, lineHeight: 1, borderRadius: 4,
                     display: "flex", alignItems: "center",
                   }} title="Seuraava vuosi">
                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 1l4 4-4 4"/></svg>
                   </button>
                 </div>
               </div>
-              <h1 style={{ fontSize: 24, fontWeight: 700, color: "#f0f2fa", letterSpacing: "-0.3px", lineHeight: 1.2 }}>
+              <h1 style={{ fontSize: 24, fontWeight: 700, color: "#f8f0f8", letterSpacing: "-0.3px", lineHeight: 1.2 }}>
                 Grace Montagnard Alliance Church
               </h1>
-              <div style={{ fontSize: 13, color: "#6b7394", marginTop: 3 }}>Kulmakatu 8, 92100 Raahe</div>
+              <div style={{ fontSize: 13, color: "#9b8aad", marginTop: 3 }}>Kulmakatu 8, 92100 Raahe</div>
             </div>
           </div>
           <div style={{ display: "flex", gap: 6, flexWrap: "wrap", alignItems: "center" }}>
@@ -848,7 +848,7 @@ export default function KassakirjaApp() {
                   <div style={{ position: "fixed", inset: 0, zIndex: 90 }} onClick={() => setShowPdfMenu(false)} />
                   <div style={{
                     position: "absolute", top: "calc(100% + 6px)", right: 0, zIndex: 100,
-                    background: "#1e2440", border: "1px solid rgba(255,255,255,0.1)",
+                    background: "#1a0f2e", border: "1px solid rgba(255,255,255,0.1)",
                     borderRadius: 10, padding: 6, minWidth: 230,
                     boxShadow: "0 12px 40px rgba(0,0,0,0.5)",
                     animation: "fadeIn 0.2s ease"
@@ -906,12 +906,12 @@ export default function KassakirjaApp() {
                   <div style={{ position: "fixed", inset: 0, zIndex: 90 }} onClick={() => setShowUserMenu(false)} />
                   <div style={{
                     position: "absolute", top: "calc(100% + 6px)", right: 0, zIndex: 100,
-                    background: "#1e2440", border: "1px solid rgba(255,255,255,0.1)",
+                    background: "#1a0f2e", border: "1px solid rgba(255,255,255,0.1)",
                     borderRadius: 10, padding: 6, minWidth: 200,
                     boxShadow: "0 12px 40px rgba(0,0,0,0.5)", animation: "fadeIn 0.2s ease"
                   }}>
-                    <div style={{ padding: "8px 12px", fontSize: 12, color: "#8b95b8", borderBottom: "1px solid rgba(255,255,255,0.06)", marginBottom: 4 }}>
-                      <div style={{ color: "#e0e4ef", fontWeight: 600, fontSize: 13 }}>{currentUser.name}</div>
+                    <div style={{ padding: "8px 12px", fontSize: 12, color: "#a090b8", borderBottom: "1px solid rgba(255,255,255,0.06)", marginBottom: 4 }}>
+                      <div style={{ color: "#f0e8ef", fontWeight: 600, fontSize: 13 }}>{currentUser.name}</div>
                       <div style={{ marginTop: 2 }}>{currentUser.role === "admin" ? "Ylläpitäjä" : currentUser.role === "editor" ? "Muokkaaja" : "Katselija"}</div>
                     </div>
                     {isAdmin && (
@@ -939,7 +939,7 @@ export default function KassakirjaApp() {
         <div style={{ padding: "0 32px 16px", maxWidth: 1200, margin: "0 auto" }}>
           <div className="card" style={{ padding: "20px 24px", animation: "fadeIn 0.3s ease" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
-              <div style={{ fontSize: 15, fontWeight: 600, color: "#c8cee0" }}>Käyttäjien hallinta</div>
+              <div style={{ fontSize: 15, fontWeight: 600, color: "#e0d4e8" }}>Käyttäjien hallinta</div>
               <button className="btn btn-ghost" style={{ padding: "5px 10px" }} onClick={() => setShowUserMgmt(false)}><IconX /></button>
             </div>
             <UserManager />
@@ -953,8 +953,8 @@ export default function KassakirjaApp() {
           {/* Alkusaldo - editable */}
           <div className="card" style={{ padding: "18px 20px", cursor: canEdit ? "pointer" : "default" }}
             onClick={() => { if (canEdit && !editingBalance) { setEditingBalance(true); setBalanceInput(String(openingBalance)); } }}>
-            <div style={{ fontSize: 11, color: "#6b7394", fontWeight: 600, letterSpacing: 0.5, textTransform: "uppercase", marginBottom: 8, display: "flex", alignItems: "center", gap: 6 }}>
-              Alkusaldo {canEdit && !editingBalance && <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="#6b7394" strokeWidth="1.5"><path d="M11 2l3 3-8 8H3v-3z"/></svg>}
+            <div style={{ fontSize: 11, color: "#9b8aad", fontWeight: 600, letterSpacing: 0.5, textTransform: "uppercase", marginBottom: 8, display: "flex", alignItems: "center", gap: 6 }}>
+              Alkusaldo {canEdit && !editingBalance && <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="#9b8aad" strokeWidth="1.5"><path d="M11 2l3 3-8 8H3v-3z"/></svg>}
             </div>
             {editingBalance ? (
               <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
@@ -966,16 +966,16 @@ export default function KassakirjaApp() {
                 <button className="btn btn-ghost" style={{ padding: "4px 8px" }} onClick={e => { e.stopPropagation(); setEditingBalance(false); }}><IconX /></button>
               </div>
             ) : (
-              <div style={{ fontSize: 24, fontWeight: 700, fontFamily: "'DM Mono', monospace", color: "#8b95b8" }}>{fmtAbs(openingBalance)}</div>
+              <div style={{ fontSize: 24, fontWeight: 700, fontFamily: "'DM Mono', monospace", color: "#a090b8" }}>{fmtAbs(openingBalance)}</div>
             )}
           </div>
           {[
             { label: "Tulot yhteensä", value: fmtAbs(totalIncome), color: "#5dda8a" },
             { label: "Menot yhteensä", value: fmtAbs(totalExpense), color: "#ff6b6b" },
-            { label: "Saldo nyt", value: fmtAbs(currentBalance), color: "#4f8cff" },
+            { label: "Saldo nyt", value: fmtAbs(currentBalance), color: "#4fc8e8" },
           ].map((c, i) => (
             <div key={i} className="card" style={{ padding: "18px 20px" }}>
-              <div style={{ fontSize: 11, color: "#6b7394", fontWeight: 600, letterSpacing: 0.5, textTransform: "uppercase", marginBottom: 8 }}>{c.label}</div>
+              <div style={{ fontSize: 11, color: "#9b8aad", fontWeight: 600, letterSpacing: 0.5, textTransform: "uppercase", marginBottom: 8 }}>{c.label}</div>
               <div style={{ fontSize: 24, fontWeight: 700, fontFamily: "'DM Mono', monospace", color: c.color }}>{c.value}</div>
             </div>
           ))}
@@ -989,7 +989,7 @@ export default function KassakirjaApp() {
           <div className="fade-in">
             {/* Monthly bar chart */}
             <div className="card" style={{ padding: "24px 28px", marginBottom: 20 }}>
-              <div style={{ fontSize: 15, fontWeight: 600, marginBottom: 20, color: "#c8cee0" }}>Kuukausittainen yhteenveto</div>
+              <div style={{ fontSize: 15, fontWeight: 600, marginBottom: 20, color: "#e0d4e8" }}>Kuukausittainen yhteenveto</div>
               <div style={{ display: "flex", gap: 8, alignItems: "flex-end", height: 180 }}>
                 {monthlySummary.map((m, i) => {
                   const hInc = maxVal > 0 ? (m.income / maxVal) * 140 : 0;
@@ -1009,7 +1009,7 @@ export default function KassakirjaApp() {
                           transition: "height 0.5s ease"
                         }} title={`Menot: ${fmtAbs(m.expense)}`} />
                       </div>
-                      <div style={{ fontSize: 10, color: "#6b7394", fontWeight: 500 }}>{m.name.substring(0, 3)}</div>
+                      <div style={{ fontSize: 10, color: "#9b8aad", fontWeight: 500 }}>{m.name.substring(0, 3)}</div>
                     </div>
                   );
                 })}
@@ -1046,7 +1046,7 @@ export default function KassakirjaApp() {
                       <td style={{ textAlign: "right" }} className="expense-val">{fmt(m.expense)}</td>
                       <td style={{ textAlign: "right" }} className="balance-val">{fmtAbs(m.closing)}</td>
                       <td style={{ textAlign: "center" }}>
-                        {m.count > 0 ? <span className="tag" style={{ background: "rgba(79,140,255,0.12)", color: "#4f8cff" }}>{m.count}</span> : <span style={{ color: "#3e4560" }}>–</span>}
+                        {m.count > 0 ? <span className="tag" style={{ background: "rgba(79,140,255,0.12)", color: "#4fc8e8" }}>{m.count}</span> : <span style={{ color: "#3e4560" }}>–</span>}
                       </td>
                     </tr>
                   ))}
@@ -1057,7 +1057,7 @@ export default function KassakirjaApp() {
                     <td style={{ textAlign: "right" }} className="mono">{fmtAbs(openingBalance)}</td>
                     <td style={{ textAlign: "right" }} className="income-val" style={{ textAlign: "right", color: "#5dda8a", fontFamily: "'DM Mono', monospace", fontWeight: 700 }}>{fmtAbs(totalIncome)}</td>
                     <td style={{ textAlign: "right" }} className="expense-val" style={{ textAlign: "right", color: "#ff6b6b", fontFamily: "'DM Mono', monospace", fontWeight: 700 }}>{fmtAbs(totalExpense)}</td>
-                    <td style={{ textAlign: "right", fontFamily: "'DM Mono', monospace", fontWeight: 700, color: "#4f8cff" }}>{fmtAbs(currentBalance)}</td>
+                    <td style={{ textAlign: "right", fontFamily: "'DM Mono', monospace", fontWeight: 700, color: "#4fc8e8" }}>{fmtAbs(currentBalance)}</td>
                     <td />
                   </tr>
                 </tfoot>
@@ -1066,11 +1066,11 @@ export default function KassakirjaApp() {
 
             {/* Category breakdown */}
             <div className="card" style={{ padding: "24px 28px", marginTop: 20 }}>
-              <div style={{ fontSize: 15, fontWeight: 600, marginBottom: 16, color: "#c8cee0" }}>Kategoriat</div>
+              <div style={{ fontSize: 15, fontWeight: 600, marginBottom: 16, color: "#e0d4e8" }}>Kategoriat</div>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: 10 }}>
                 {Object.entries(categoryBreakdown).filter(([,v]) => v.income > 0 || v.expense > 0).map(([cat, v]) => (
                   <div key={cat} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "10px 14px", background: "rgba(255,255,255,0.03)", borderRadius: 8 }}>
-                    <span style={{ fontSize: 13, color: "#aab4d0" }}>{cat}</span>
+                    <span style={{ fontSize: 13, color: "#c4b5d0" }}>{cat}</span>
                     <div style={{ display: "flex", gap: 12 }}>
                       {v.income > 0 && <span className="income-val">{fmtAbs(v.income)}</span>}
                       {v.expense > 0 && <span className="expense-val">{fmtAbs(v.expense)}</span>}
@@ -1099,12 +1099,12 @@ export default function KassakirjaApp() {
             {/* Month summary header */}
             <div className="card" style={{ padding: "20px 24px", marginBottom: 16 }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12 }}>
-                <h2 style={{ fontSize: 20, fontWeight: 600, color: "#f0f2fa" }}>{MONTHS[activeMonth]} {year}</h2>
+                <h2 style={{ fontSize: 20, fontWeight: 600, color: "#f8f0f8" }}>{MONTHS[activeMonth]} {year}</h2>
                 <div style={{ display: "flex", gap: 20, fontSize: 13 }}>
-                  <div><span style={{ color: "#6b7394" }}>Alkusaldo: </span><span className="mono">{fmtAbs(summary.opening)}</span></div>
-                  <div><span style={{ color: "#6b7394" }}>Tulot: </span><span className="income-val">{fmtAbs(summary.income)}</span></div>
-                  <div><span style={{ color: "#6b7394" }}>Menot: </span><span className="expense-val">{fmtAbs(summary.expense)}</span></div>
-                  <div><span style={{ color: "#6b7394" }}>Loppusaldo: </span><span style={{ color: "#4f8cff", fontFamily: "'DM Mono', monospace", fontWeight: 600 }}>{fmtAbs(summary.closing)}</span></div>
+                  <div><span style={{ color: "#9b8aad" }}>Alkusaldo: </span><span className="mono">{fmtAbs(summary.opening)}</span></div>
+                  <div><span style={{ color: "#9b8aad" }}>Tulot: </span><span className="income-val">{fmtAbs(summary.income)}</span></div>
+                  <div><span style={{ color: "#9b8aad" }}>Menot: </span><span className="expense-val">{fmtAbs(summary.expense)}</span></div>
+                  <div><span style={{ color: "#9b8aad" }}>Loppusaldo: </span><span style={{ color: "#4fc8e8", fontFamily: "'DM Mono', monospace", fontWeight: 600 }}>{fmtAbs(summary.closing)}</span></div>
                 </div>
               </div>
             </div>
@@ -1112,7 +1112,7 @@ export default function KassakirjaApp() {
             {/* Transactions table */}
             <div className="card" style={{ overflow: "auto" }}>
               <div style={{ padding: "14px 20px", display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
-                <span style={{ fontSize: 13, color: "#6b7394" }}>{currentRows.length} kirjausta</span>
+                <span style={{ fontSize: 13, color: "#9b8aad" }}>{currentRows.length} kirjausta</span>
                 {canEdit && <button className="btn btn-primary" onClick={() => { setShowAddForm(!showAddForm); setEditingId(null); }}>
                   <IconPlus /> Lisää kirjaus
                 </button>}
@@ -1123,15 +1123,15 @@ export default function KassakirjaApp() {
                 <div style={{ padding: "16px 20px", background: "rgba(79,140,255,0.04)", borderBottom: "1px solid rgba(79,140,255,0.1)", animation: "slideDown 0.3s ease" }}>
                   <div style={{ display: "grid", gridTemplateColumns: "120px 70px 140px 1fr 120px 110px 110px 120px", gap: 8, alignItems: "end" }}>
                     <div>
-                      <label style={{ fontSize: 10, color: "#6b7394", display: "block", marginBottom: 3, textTransform: "uppercase", letterSpacing: 0.5 }}>Päivämäärä</label>
+                      <label style={{ fontSize: 10, color: "#9b8aad", display: "block", marginBottom: 3, textTransform: "uppercase", letterSpacing: 0.5 }}>Päivämäärä</label>
                       <input type="date" className="input-field" value={newRow.date} onChange={e => setNewRow({ ...newRow, date: e.target.value })} />
                     </div>
                     <div>
-                      <label style={{ fontSize: 10, color: "#6b7394", display: "block", marginBottom: 3, textTransform: "uppercase", letterSpacing: 0.5 }}>Tosite</label>
+                      <label style={{ fontSize: 10, color: "#9b8aad", display: "block", marginBottom: 3, textTransform: "uppercase", letterSpacing: 0.5 }}>Tosite</label>
                       <input type="number" className="input-field" value={newRow.receipt} onChange={e => setNewRow({ ...newRow, receipt: e.target.value })} placeholder="#" />
                     </div>
                     <div>
-                      <label style={{ fontSize: 10, color: "#6b7394", display: "block", marginBottom: 3, textTransform: "uppercase", letterSpacing: 0.5 }}>Kategoria</label>
+                      <label style={{ fontSize: 10, color: "#9b8aad", display: "block", marginBottom: 3, textTransform: "uppercase", letterSpacing: 0.5 }}>Kategoria</label>
                       <select className="input-field" value={newRow.category} onChange={e => setNewRow({ ...newRow, category: e.target.value })}>
                         <option value="">Valitse...</option>
                         <optgroup label="Tulot">{CATEGORIES_INCOME.map(c => <option key={c} value={c}>{c}</option>)}</optgroup>
@@ -1139,23 +1139,23 @@ export default function KassakirjaApp() {
                       </select>
                     </div>
                     <div>
-                      <label style={{ fontSize: 10, color: "#6b7394", display: "block", marginBottom: 3, textTransform: "uppercase", letterSpacing: 0.5 }}>Selite</label>
+                      <label style={{ fontSize: 10, color: "#9b8aad", display: "block", marginBottom: 3, textTransform: "uppercase", letterSpacing: 0.5 }}>Selite</label>
                       <input className="input-field" value={newRow.description} onChange={e => setNewRow({ ...newRow, description: e.target.value })} placeholder="Kuvaus..." />
                     </div>
                     <div>
-                      <label style={{ fontSize: 10, color: "#6b7394", display: "block", marginBottom: 3, textTransform: "uppercase", letterSpacing: 0.5 }}>Nimi</label>
+                      <label style={{ fontSize: 10, color: "#9b8aad", display: "block", marginBottom: 3, textTransform: "uppercase", letterSpacing: 0.5 }}>Nimi</label>
                       <input className="input-field" value={newRow.name} onChange={e => setNewRow({ ...newRow, name: e.target.value })} />
                     </div>
                     <div>
-                      <label style={{ fontSize: 10, color: "#6b7394", display: "block", marginBottom: 3, textTransform: "uppercase", letterSpacing: 0.5 }}>Tulo €</label>
+                      <label style={{ fontSize: 10, color: "#9b8aad", display: "block", marginBottom: 3, textTransform: "uppercase", letterSpacing: 0.5 }}>Tulo €</label>
                       <input type="number" step="0.01" className="input-field" value={newRow.income} onChange={e => setNewRow({ ...newRow, income: e.target.value })} />
                     </div>
                     <div>
-                      <label style={{ fontSize: 10, color: "#6b7394", display: "block", marginBottom: 3, textTransform: "uppercase", letterSpacing: 0.5 }}>Meno €</label>
+                      <label style={{ fontSize: 10, color: "#9b8aad", display: "block", marginBottom: 3, textTransform: "uppercase", letterSpacing: 0.5 }}>Meno €</label>
                       <input type="number" step="0.01" className="input-field" value={newRow.expense} onChange={e => setNewRow({ ...newRow, expense: e.target.value })} />
                     </div>
                     <div>
-                      <label style={{ fontSize: 10, color: "#6b7394", display: "block", marginBottom: 3, textTransform: "uppercase", letterSpacing: 0.5 }}>Maksutapa</label>
+                      <label style={{ fontSize: 10, color: "#9b8aad", display: "block", marginBottom: 3, textTransform: "uppercase", letterSpacing: 0.5 }}>Maksutapa</label>
                       <select className="input-field" value={newRow.payment} onChange={e => setNewRow({ ...newRow, payment: e.target.value })}>
                         <option value="">Valitse...</option>
                         {PAYMENT_METHODS.map(p => <option key={p} value={p}>{p}</option>)}
@@ -1186,7 +1186,7 @@ export default function KassakirjaApp() {
                 </thead>
                 <tbody>
                   {currentRows.length === 0 && (
-                    <tr><td colSpan={10} style={{ textAlign: "center", padding: 40, color: "#4a5270" }}>Ei kirjauksia tässä kuussa</td></tr>
+                    <tr><td colSpan={10} style={{ textAlign: "center", padding: 40, color: "#5a4570" }}>Ei kirjauksia tässä kuussa</td></tr>
                   )}
                   {currentRows.map((row, idx) => {
                     // Running balance
@@ -1229,20 +1229,20 @@ export default function KassakirjaApp() {
                     const isIncome = CATEGORIES_INCOME.includes(row.category);
                     return (
                       <tr key={row.id}>
-                        <td style={{ color: "#8b95b8", fontSize: 12 }}>{dateStr(row.date)}</td>
-                        <td style={{ color: "#6b7394", fontSize: 12, textAlign: "center" }}>{row.receipt}</td>
+                        <td style={{ color: "#a090b8", fontSize: 12 }}>{dateStr(row.date)}</td>
+                        <td style={{ color: "#9b8aad", fontSize: 12, textAlign: "center" }}>{row.receipt}</td>
                         <td>
                           <span className="tag" style={{
                             background: isIncome ? "rgba(93,218,138,0.1)" : "rgba(255,107,107,0.1)",
                             color: isIncome ? "#5dda8a" : "#ff6b6b"
                           }}>{row.category}</span>
                         </td>
-                        <td style={{ color: "#c8cee0" }}>{row.description}</td>
-                        <td style={{ color: "#8b95b8" }}>{row.name}</td>
+                        <td style={{ color: "#e0d4e8" }}>{row.description}</td>
+                        <td style={{ color: "#a090b8" }}>{row.name}</td>
                         <td className="income-val" style={{ textAlign: "right" }}>{fmt(row.income)}</td>
                         <td className="expense-val" style={{ textAlign: "right" }}>{fmt(row.expense)}</td>
                         <td className="balance-val" style={{ textAlign: "right" }}>{fmtAbs(bal)}</td>
-                        <td style={{ fontSize: 12, color: "#6b7394" }}>{row.payment}</td>
+                        <td style={{ fontSize: 12, color: "#9b8aad" }}>{row.payment}</td>
                         <td>
                           {canEdit && <div style={{ display: "flex", gap: 4 }}>
                             <button className="btn btn-ghost" style={{ padding: "5px 8px", fontSize: 11 }} onClick={() => startEdit(row)}><IconEdit /></button>
